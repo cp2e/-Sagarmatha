@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import { OrderSchema } from './Orders';
 import { RoleSchema } from './Role';
 const Schema = mongoose.Schema;
-export const CustomerSchema = new Schema({
+export const UserSchema = new Schema({
     firstName: {
         type: String,
         required: 'Enter a first name'
@@ -24,3 +24,4 @@ export const CustomerSchema = new Schema({
     roles:[RoleSchema]
    
 });
+export const UserModel= mongoose.model("User",UserSchema)

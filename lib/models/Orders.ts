@@ -24,3 +24,4 @@ export const OrderSchema = new Schema({
     }
    
 });
+export const OrderModel= mongoose.model("Order",OrderSchema)
