@@ -31,7 +31,24 @@ export class userRepo implements IuserRepo {
         }
     }
 
-    
+    async getUserCount()
+    {
+        try {
+            this.MongoCon()
+            let users = await UserModel.find()
+            // db.school
+            return users.length
+        }
+        catch (err) {
+            console.log(err)
+            throw new Error("fetching data from DB problem");
+        }
+        finally {
+            this.MongoDisCon()
+        }
+
+    }
+
     async findAll() {
         try {
             this.MongoCon()

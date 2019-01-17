@@ -12,9 +12,9 @@ class App {
         this.app = express();
         this.config();
         //  this.routePrv.routes(this.app); 
-        this.app.use('/order', Order_1.OrderController);
-        this.app.use('/role', Role_1.RoleController);
-        this.app.use('/user', User_1.UserController);
+        this.app.use('/api/order', Order_1.OrderController);
+        this.app.use('/api/role', Role_1.RoleController);
+        this.app.use('/api/user', User_1.UserController);
     }
     config() {
         // support application/json type post data
