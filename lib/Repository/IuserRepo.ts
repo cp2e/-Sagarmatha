@@ -7,6 +7,7 @@ export interface IuserRepo
      updateUser(user:any):Promise<any>
      deleteUser(id:string) 
      findallusers(page:number,page_size:number)
-     getUserCount()
+     getUserCount() 
+     findByUserName(userName: string)
     
 }

@@ -21,6 +21,16 @@ router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
         res.status(400).send({ error: err.message });
     }
 }));
+router.get('/find_by_user_name', (req, res) => __awaiter(this, void 0, void 0, function* () {
+    let Repo = new userRepo_1.userRepo();
+    try {
+        let users = yield Repo.findByUserName(req.query.userName);
+        res.status(200).send(users);
+    }
+    catch (err) {
+        res.status(400).send({ error: err.message });
+    }
+}));
 router.get('/find_all_users', (req, res) => __awaiter(this, void 0, void 0, function* () {
     let Repo = new userRepo_1.userRepo();
     try {

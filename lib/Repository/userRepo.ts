@@ -63,6 +63,23 @@ export class userRepo implements IuserRepo {
             this.MongoDisCon()
         }
     }
+
+    async findByUserName(userName: string) {
+        try {
+            this.MongoCon()
+            let Users = await UserModel.findOne({userName:userName})
+            return Users
+        }
+        catch (err) {
+            console.log(err)
+            throw new Error("fetching data from DB problem");
+        }
+        finally {
+            this.MongoDisCon()
+        }
+    }
+
+
     async findById(id: string) {
         try {
             this.MongoCon()

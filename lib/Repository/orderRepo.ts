@@ -11,7 +11,7 @@ export class orderRepo implements IorderRepo {
             this.MongoCon()
             let orders = await UserModel.aggregate([
                 { $unwind: '$orders' },
-                { $project: { _id: '$orders._id', description: '$orders.description', currency: '$orders.currency', created_date: '$orders.created_date', updated_date: '$orders.updated_date' } },
+                { $project: { _id: '$orders._id',company:'$orders.company', description: '$orders.description', currency: '$orders.currency', created_date: '$orders.created_date', updated_date: '$orders.updated_date' } },
                 { $skip: skip },
                 { $limit: limit }
             ])

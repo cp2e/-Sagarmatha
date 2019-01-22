@@ -5,6 +5,10 @@ const Orders_1 = require("./Orders");
 const Role_1 = require("./Role");
 const Schema = mongoose.Schema;
 exports.UserSchema = new Schema({
+    userName: {
+        type: String,
+        required: 'Enter a first name'
+    },
     firstName: {
         type: String,
         required: 'Enter a first name'
