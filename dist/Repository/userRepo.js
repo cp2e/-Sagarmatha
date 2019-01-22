@@ -34,11 +34,44 @@ class userRepo {
             }
         });
     }
+    getUserCount() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                this.MongoCon();
+                let users = yield User_1.UserModel.find();
+                // db.school
+                return users.length;
+            }
+            catch (err) {
+                console.log(err);
+                throw new Error("fetching data from DB problem");
+            }
+            finally {
+                this.MongoDisCon();
+            }
+        });
+    }
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 this.MongoCon();
                 let Users = yield User_1.UserModel.find();
+                return Users;
+            }
+            catch (err) {
+                console.log(err);
+                throw new Error("fetching data from DB problem");
+            }
+            finally {
+                this.MongoDisCon();
+            }
+        });
+    }
+    findByUserName(userName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                this.MongoCon();
+                let Users = yield User_1.UserModel.findOne({ userName: userName });
                 return Users;
             }
             catch (err) {

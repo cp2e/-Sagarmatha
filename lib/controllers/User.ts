@@ -17,11 +17,36 @@ router.get('/', async (req: Request, res: Response) => {
        res.status(400).send({error:err.message})
     }
 });
+
+router.get('/find_by_user_name', async (req: Request, res: Response) => {
+    let Repo:IuserRepo=new userRepo();
+    try{
+    let users = await Repo.findByUserName(req.query.userName)
+    res.status(200).send(users);
+    }
+    catch(err)
+    {
+       res.status(400).send({error:err.message})
+    }
+});
+
 router.get('/find_all_users', async (req: Request, res: Response) => {
     let Repo:IuserRepo=new userRepo();
     try{
     let users = await Repo.findallusers(req.query.page,req.query.page_size)
     res.status(200).send(users);
+    }
+    catch(err)
+    {
+       res.status(400).send({error:err.message})
+    }
+});
+router.get('/user_count',async (req: Request, res: Response) =>
+{
+    let Repo:IuserRepo=new userRepo();
+    try{
+    let users = await Repo.getUserCount()
+    res.status(200).send({count:users});
     }
     catch(err)
     {
@@ -70,7 +95,7 @@ router.post('/update',async (req: Request, res: Response) => {
 router.get('/delete',async  (req: Request, res: Response) => {
     let Repo:IuserRepo = new userRepo();
     try{
-    let user = await Repo.deleteUser(req.query.id)
+    let user = await Repo.deleteUser(req.query._id)
     console.log(user)
     res.status(200).send(user);
     }

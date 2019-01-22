@@ -3,6 +3,12 @@ import { OrderSchema } from './Orders';
 import { RoleSchema } from './Role';
 const Schema = mongoose.Schema;
 export const UserSchema = new Schema({
+    userName:
+    {
+        type:String,
+        required: 'Enter a first name'
+
+    },
     firstName: {
         type: String,
         required: 'Enter a first name'

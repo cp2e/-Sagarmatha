@@ -21,11 +21,31 @@ router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
         res.status(400).send({ error: err.message });
     }
 }));
+router.get('/find_by_user_name', (req, res) => __awaiter(this, void 0, void 0, function* () {
+    let Repo = new userRepo_1.userRepo();
+    try {
+        let users = yield Repo.findByUserName(req.query.userName);
+        res.status(200).send(users);
+    }
+    catch (err) {
+        res.status(400).send({ error: err.message });
+    }
+}));
 router.get('/find_all_users', (req, res) => __awaiter(this, void 0, void 0, function* () {
     let Repo = new userRepo_1.userRepo();
     try {
         let users = yield Repo.findallusers(req.query.page, req.query.page_size);
         res.status(200).send(users);
+    }
+    catch (err) {
+        res.status(400).send({ error: err.message });
+    }
+}));
+router.get('/user_count', (req, res) => __awaiter(this, void 0, void 0, function* () {
+    let Repo = new userRepo_1.userRepo();
+    try {
+        let users = yield Repo.getUserCount();
+        res.status(200).send({ count: users });
     }
     catch (err) {
         res.status(400).send({ error: err.message });
@@ -67,7 +87,7 @@ router.post('/update', (req, res) => __awaiter(this, void 0, void 0, function* (
 router.get('/delete', (req, res) => __awaiter(this, void 0, void 0, function* () {
     let Repo = new userRepo_1.userRepo();
     try {
-        let user = yield Repo.deleteUser(req.query.id);
+        let user = yield Repo.deleteUser(req.query._id);
         console.log(user);
         res.status(200).send(user);
     }

@@ -22,9 +22,9 @@ class App {
         this.config();       
       //  this.routePrv.routes(this.app); 
        
-      this.app.use('/order',OrderController)    
-      this.app.use('/role',RoleController)    
-      this.app.use('/user',UserController)    
+      this.app.use('/api/order',OrderController)    
+      this.app.use('/api/role',RoleController)    
+      this.app.use('/api/user',UserController)    
 
     }
 
