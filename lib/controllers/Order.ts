@@ -11,7 +11,7 @@ const router: Router = Router();
 router.get('/find_all_orders', async (req: Request, res: Response) => {
     let Repo:IorderRepo=new orderRepo();
     try{
-    let orders = await Repo.findallorders(req.query.page,req.query.page_size)
+    let orders = await Repo.findallorders(req.query.page,req.query.page_size,req.query.userId)
     res.status(200).send(orders);
     }
     catch(err)
@@ -32,10 +32,10 @@ router.post('/add_user_order', async (req: Request, res: Response) => {
     }
 });
 
-router.post('/delete_user_order', async (req: Request, res: Response) => {
+router.get('/delete_user_order', async (req: Request, res: Response) => {
     let Repo:IorderRepo=new orderRepo();
     try{
-    let orders = await Repo.deleteUserOrder(req.body)
+    let orders = await Repo.deleteUserOrder(req.query._id,req.query.userId)
     res.status(200).send(orders);
     }
     catch(err)
@@ -56,7 +56,18 @@ router.post('/update_user_order', async (req: Request, res: Response) => {
     }
 });
 
-
+router.get('/order_count',async (req: Request, res: Response) =>
+{
+    let Repo:IorderRepo=new orderRepo();
+    try{
+    let users = await Repo.getOrderCount(req.query.page,req.query.page_size,req.query.userId)
+    res.status(200).send({count:users});
+    }
+    catch(err)
+    {
+       res.status(400).send({error:err.message})
+    }
+});
 
 router.get('/find_by_id/:id', (req: Request, res: Response) => {
 

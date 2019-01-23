@@ -14,7 +14,7 @@ const router = express_1.Router();
 router.get('/find_all_orders', (req, res) => __awaiter(this, void 0, void 0, function* () {
     let Repo = new orderRepo_1.orderRepo();
     try {
-        let orders = yield Repo.findallorders(req.query.page, req.query.page_size);
+        let orders = yield Repo.findallorders(req.query.page, req.query.page_size, req.query.userId);
         res.status(200).send(orders);
     }
     catch (err) {
@@ -31,10 +31,10 @@ router.post('/add_user_order', (req, res) => __awaiter(this, void 0, void 0, fun
         res.status(400).send({ error: err.message });
     }
 }));
-router.post('/delete_user_order', (req, res) => __awaiter(this, void 0, void 0, function* () {
+router.get('/delete_user_order', (req, res) => __awaiter(this, void 0, void 0, function* () {
     let Repo = new orderRepo_1.orderRepo();
     try {
-        let orders = yield Repo.deleteUserOrder(req.body);
+        let orders = yield Repo.deleteUserOrder(req.query._id, req.query.userId);
         res.status(200).send(orders);
     }
     catch (err) {
@@ -46,6 +46,16 @@ router.post('/update_user_order', (req, res) => __awaiter(this, void 0, void 0, 
     try {
         let orders = yield Repo.updateUserOrder(req.body);
         res.status(200).send(orders);
+    }
+    catch (err) {
+        res.status(400).send({ error: err.message });
+    }
+}));
+router.get('/order_count', (req, res) => __awaiter(this, void 0, void 0, function* () {
+    let Repo = new orderRepo_1.orderRepo();
+    try {
+        let users = yield Repo.getOrderCount(req.query.page, req.query.page_size, req.query.userId);
+        res.status(200).send({ count: users });
     }
     catch (err) {
         res.status(400).send({ error: err.message });
