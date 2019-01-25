@@ -60,8 +60,8 @@ class roleRepo {
                 this.MongoCon();
                 let user = yield User_1.UserModel.findOne({ 'roles._id': role._id });
                 //let user = await UserModel.findOne({ _id: userid })
-                let index = user["roles"].findIndex(x => x._id === role._id);
-                user["roles"] = user["roles"].splice(index, 1);
+                let index = user.roles.findIndex(x => x._id === role._id);
+                let x = user.roles.splice(index, 1);
                 let saveduser = yield user.save();
                 return saveduser;
             }

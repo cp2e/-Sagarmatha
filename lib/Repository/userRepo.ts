@@ -112,10 +112,10 @@ export class userRepo implements IuserRepo {
     }
     async updateUser(user: any): Promise<any> {
         try {
-            user.roles
+           // user.roles.length=0
+           this.MongoCon()
             let updatedUser = new UserModel(user)
-            this.MongoCon()
-            await updatedUser.update(user)
+            let x =await updatedUser.update(user)
             return updatedUser
         }
         catch (err) {

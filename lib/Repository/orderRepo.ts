@@ -76,13 +76,20 @@ export class orderRepo implements IorderRepo {
 
     }
 
-    async addUserOrder(userid: string, order: any) {
+    async addUserOrder(initiatorUserId:any,userid: string, order: any) {
         try {
+            console.log(initiatorUserId)
             this.MongoCon()
-            let user = await UserModel.findOne({ _id: userid })
-            user["orders"].push(order)
-            let saveduser = await user.save()
-            return saveduser
+            let reqUser = await UserModel.findOne({ _id: userid })
+            let initiator= await UserModel.findOne({ _id: initiatorUserId })
+            //let user = await UserModel.findOne({ 'orders._id': order })
+            if ((initiator["roles"].find(x => x.name == "Admin"))||initiatorUserId==userid) {
+                reqUser.orders.push(order)
+                let saveduser = await reqUser.save()
+                return saveduser
+            }
+           
+            return null;
         }
         catch (err) {
             console.log(err)
@@ -118,16 +125,20 @@ export class orderRepo implements IorderRepo {
 
     }
 
-    async  updateUserOrder(order: any) {
+    async updateUserOrder(userid: string, order: any) {
         try {
             this.MongoCon()
+            let reqUser = await UserModel.findOne({ _id: userid })
             let user = await UserModel.findOne({ 'orders._id': order._id })
-            // let user = await UserModel.findOne({ _id: userid })
-            let index = user["orders"].findIndex(x => x._id === order._id)
-            user["orders"] = user["orders"].splice(index, 1)
-            user["orders"].push(order)
-            let saveduser = await user.save()
-            return saveduser
+            if ((reqUser["roles"].find(x => x.name == "Admin"))||(reqUser.id == user.id)) {
+                let index = user.orders.findIndex(p => p.id === order._id)
+                let x =  user.orders.splice(index,1)
+                user.orders.push(order)
+                let saveduser = await user.save()
+                return saveduser
+            }
+           
+            return null;
         }
         catch (err) {
             console.log(err)

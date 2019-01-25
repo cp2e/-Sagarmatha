@@ -23,7 +23,8 @@ router.get('/find_all_orders', async (req: Request, res: Response) => {
 router.post('/add_user_order', async (req: Request, res: Response) => {
     let Repo:IorderRepo=new orderRepo();
     try{
-    let orders = await Repo.addUserOrder(req.query._id,req.body)
+    
+    let orders = await Repo.addUserOrder(req.query.initiatorUserId,req.query.userId,req.body)
     res.status(200).send(orders);
     }
     catch(err)
@@ -47,7 +48,7 @@ router.get('/delete_user_order', async (req: Request, res: Response) => {
 router.post('/update_user_order', async (req: Request, res: Response) => {
     let Repo:IorderRepo=new orderRepo();
     try{
-    let orders = await Repo.updateUserOrder(req.body)
+    let orders = await Repo.updateUserOrder(req.query.userId,req.body)
     res.status(200).send(orders);
     }
     catch(err)

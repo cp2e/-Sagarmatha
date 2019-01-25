@@ -52,8 +52,8 @@ export  class roleRepo implements IroleRepo
             this.MongoCon()
             let user=await UserModel.findOne( {'roles._id':role._id})
             //let user = await UserModel.findOne({ _id: userid })
-            let index = user["roles"].findIndex (x => x._id===role._id)
-            user["roles"]=user["roles"].splice(index,1)
+            let index = user.roles.findIndex (x => x._id===role._id)
+            let x=user.roles.splice(index,1)
             let saveduser = await user.save()
             return saveduser
         }

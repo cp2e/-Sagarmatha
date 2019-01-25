@@ -120,10 +120,10 @@ class userRepo {
     updateUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                user.roles;
-                let updatedUser = new User_1.UserModel(user);
+                // user.roles.length=0
                 this.MongoCon();
-                yield updatedUser.update(user);
+                let updatedUser = new User_1.UserModel(user);
+                let x = yield updatedUser.update(user);
                 return updatedUser;
             }
             catch (err) {

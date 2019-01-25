@@ -75,14 +75,20 @@ class orderRepo {
             }
         });
     }
-    addUserOrder(userid, order) {
+    addUserOrder(initiatorUserId, userid, order) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log(initiatorUserId);
                 this.MongoCon();
-                let user = yield User_1.UserModel.findOne({ _id: userid });
-                user["orders"].push(order);
-                let saveduser = yield user.save();
-                return saveduser;
+                let reqUser = yield User_1.UserModel.findOne({ _id: userid });
+                let initiator = yield User_1.UserModel.findOne({ _id: initiatorUserId });
+                //let user = await UserModel.findOne({ 'orders._id': order })
+                if ((initiator["roles"].find(x => x.name == "Admin")) || initiatorUserId == userid) {
+                    reqUser.orders.push(order);
+                    let saveduser = yield reqUser.save();
+                    return saveduser;
+                }
+                return null;
             }
             catch (err) {
                 console.log(err);
@@ -103,19 +109,6 @@ class orderRepo {
                     let index = user.orders.findIndex(p => p.id === order);
                     let x = user.orders.splice(index, 1);
                     let saveduser = yield user.save();
-                    // console.log(user.toJSON())
-                    // let index1 = x ["orders"].findIndex(p => p._id === order)
-                    // x ["orders"] = x ["orders"].splice(index, 1)
-                    // let updatedUser = new UserModel(x)
-                    // await updatedUser.update(x)
-                    //  return updatedUser
-                    // let orders= user.orders[0]
-                    // console.log(orders)
-                    // user.update({ _id: userid },{orders: x ["orders"]})
-                    // console.log(x)
-                    // user=await UserModel.deleteOne({ 'orders._id': order })
-                    //  user.update({ _id: userid },{$set:{orders: x["orders"]}},x=>console.log(x))
-                    // let saveduser = await user.save()
                     return saveduser;
                 }
                 return null;
@@ -129,17 +122,20 @@ class orderRepo {
             }
         });
     }
-    updateUserOrder(order) {
+    updateUserOrder(userid, order) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 this.MongoCon();
+                let reqUser = yield User_1.UserModel.findOne({ _id: userid });
                 let user = yield User_1.UserModel.findOne({ 'orders._id': order._id });
-                // let user = await UserModel.findOne({ _id: userid })
-                let index = user["orders"].findIndex(x => x._id === order._id);
-                user["orders"] = user["orders"].splice(index, 1);
-                user["orders"].push(order);
-                let saveduser = yield user.save();
-                return saveduser;
+                if ((reqUser["roles"].find(x => x.name == "Admin")) || (reqUser.id == user.id)) {
+                    let index = user.orders.findIndex(p => p.id === order._id);
+                    let x = user.orders.splice(index, 1);
+                    user.orders.push(order);
+                    let saveduser = yield user.save();
+                    return saveduser;
+                }
+                return null;
             }
             catch (err) {
                 console.log(err);

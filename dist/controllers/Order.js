@@ -24,7 +24,7 @@ router.get('/find_all_orders', (req, res) => __awaiter(this, void 0, void 0, fun
 router.post('/add_user_order', (req, res) => __awaiter(this, void 0, void 0, function* () {
     let Repo = new orderRepo_1.orderRepo();
     try {
-        let orders = yield Repo.addUserOrder(req.query._id, req.body);
+        let orders = yield Repo.addUserOrder(req.query.initiatorUserId, req.query.userId, req.body);
         res.status(200).send(orders);
     }
     catch (err) {
@@ -44,7 +44,7 @@ router.get('/delete_user_order', (req, res) => __awaiter(this, void 0, void 0, f
 router.post('/update_user_order', (req, res) => __awaiter(this, void 0, void 0, function* () {
     let Repo = new orderRepo_1.orderRepo();
     try {
-        let orders = yield Repo.updateUserOrder(req.body);
+        let orders = yield Repo.updateUserOrder(req.query.userId, req.body);
         res.status(200).send(orders);
     }
     catch (err) {
